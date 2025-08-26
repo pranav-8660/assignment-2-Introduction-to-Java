@@ -1,5 +1,5 @@
 public abstract class LoanApplication {
-    
+
     private static int counter = 1000;
     protected int applicationId;
     protected String customerName;
@@ -15,7 +15,7 @@ public abstract class LoanApplication {
         this.status = null;
     }
 
-    public abstract boolean validateApplication();
+    public abstract boolean validateApplication() throws LoanException;
 
     public void apply() {
         this.status = LoanStatus.PENDING;
