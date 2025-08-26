@@ -32,6 +32,7 @@ abstract class Employee {
     protected Department department;
     protected EmployeeLevel level;
 
+
     public Employee(int id, String name, Department department, EmployeeLevel level) {
         this.id = id;
         this.name = name;
