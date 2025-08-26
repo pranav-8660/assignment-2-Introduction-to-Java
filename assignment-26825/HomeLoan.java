@@ -5,6 +5,7 @@ public class HomeLoan extends LoanApplication implements Approvable{
     }
 
     @Override
+    @AuditLog
     public LoanStatus evaluateRisk() {
         if (amount < 50_00_000) {
             this.status = LoanStatus.APPROVED;
