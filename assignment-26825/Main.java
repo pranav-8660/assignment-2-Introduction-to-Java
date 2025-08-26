@@ -69,37 +69,17 @@ public class Main {
             }
         };
 
-        //Process loans
-        for (LoanApplication loan : loans) {
-            try {
-                processor.process(loan);
+        // Process loans
+        processLoans(loans, processor, loanMap);
 
-                // Store in map
-                loanMap.computeIfAbsent(loan.type, k -> new ArrayList<>()).add(loan);
+        // Show annotated methods
+        printAuditlogs(Approvable.class);
 
-            } catch (LoanException e) {
-                System.out.println("Error: " + e.getMessage());
-            }
-        }
+        // Show grouped applications
+        printGroupedApplications(loanMap);
 
-        //find @AuditLog methods
-        System.out.println("\nAudit Log Methods:-");
-        for (Method m : Approvable.class.getMethods()) {
-            if (m.isAnnotationPresent(AuditLog.class)) {
-                System.out.println("Annotated Method: " + m.getName());
-            }
-        }
-
-        // Print Applications
-        System.out.println("\nAll Applications:-");
-        for (Map.Entry<LoanType, List<LoanApplication>> entry : loanMap.entrySet()) {
-            System.out.println("Loan Type: " + entry.getKey());
-            LoanUtils.printApplications(entry.getValue());
-        }
-
-        //Sorting applications by amount
-        System.out.println("\nSorted Applications by Amount:-");
-        loans.sort(Comparator.comparingDouble(a -> a.amount));
-        LoanUtils.printApplications(loans);
+        // Show sorted applications
+        printSortedApplications(loans);
+        
     }
 }
