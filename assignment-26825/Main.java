@@ -1,9 +1,52 @@
 import java.util.*;
-import java.lang.*;
 import java.lang.reflect.Method;
 
 
 public class Main {
+
+    private static void processLoans(List<LoanApplication> loans,LoanProcessor loanProcessor,Map<LoanType,List<LoanApplication>> loanmap){
+
+
+        for(LoanApplication loan:loans){
+            try {
+                loanProcessor.process(loan);
+                loanmap.computeIfAbsent(loan.type, k-> new ArrayList<>()).add(loan);
+            } catch (LoanException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+        }
+    }
+
+
+    private static void printAuditlogs(Class<?> clazz){
+
+        System.out.println("Audit Log Methods:-");
+
+        for(Method m: clazz.getMethods()){
+            if(m.isAnnotationPresent(AuditLog.class)){
+                System.out.println("Annotated method-"+ m.getName());
+            }
+        }
+
+    }
+
+    private static void printGroupedApplications(Map<LoanType,List<LoanApplication>> loanmap){
+        System.out.println("All applications:-");
+
+        for(var entry:loanmap.entrySet()){
+            System.out.println("Loan type:- "+entry.getKey());
+            LoanUtils.printApplications(entry.getValue());
+        }
+    }
+
+    private static void printSortedApplications(List<LoanApplication> loans) {
+        System.out.println("\nSorted Applications by Amount:-");
+        loans.sort(Comparator.comparingDouble(a -> a.amount));
+        LoanUtils.printApplications(loans);
+    }
+
+
+
     public static void main(String[] args) {
         
         Map<LoanType, List<LoanApplication>> loanMap = new HashMap<>();
