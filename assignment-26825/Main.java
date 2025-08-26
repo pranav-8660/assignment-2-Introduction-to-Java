@@ -1,10 +1,7 @@
+import java.util.*;
+import java.lang.*;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -24,7 +21,7 @@ public class Main {
                 app.apply();
                 if (app instanceof Approvable) {
                     LoanStatus finalStatus = ((Approvable) app).evaluateRisk();
-                    System.out.println(app.customerName + " → " + finalStatus);
+                    System.out.println(app.customerName + " - " + finalStatus);
                 }
             }
         };
