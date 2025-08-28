@@ -1,6 +1,6 @@
 import java.util.List;
 
-public interface ProductInterfaceService {
+public interface ProductInterface {
 
     void addProduct(Product product);
     Product searchProduct(int productId);
